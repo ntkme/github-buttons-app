@@ -28,25 +28,60 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" v-model="options.largeButton"> Large button
+            <div class="form-row align-items-center my-1">
+              <div class="col-auto mr-auto">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" v-model="options.colorScheme"> Color scheme
+                  </label>
+                </div>
+              </div>
+              <div class="col-auto">
+                <label class="sr-only" for="prefers-color-scheme-no-preference">@media (prefers-color-scheme: no-preference)</label>
+                <select id="prefers-color-scheme-no-preference" class="form-control form-control-sm" :disabled="options.colorScheme !== true" v-model="options.prefersColorScheme['no-preference']">
+                  <option v-for="colorScheme in colorSchemes" :key="colorScheme">{{ colorScheme }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row align-items-center my-1 ml-3">
+              <div class="col-auto mr-auto">
+                <label for="prefers-color-scheme-light" class="form-check-label col-form-label-sm">@media (prefers-color-scheme: light)</label>
+              </div>
+              <div class="col-auto">
+                <select id="prefers-color-scheme-light" class="form-control form-control-sm" :disabled="options.colorScheme !== true" v-model="options.prefersColorScheme.light">
+                  <option v-for="colorScheme in colorSchemes" :key="colorScheme">{{ colorScheme }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row align-items-center my-1 ml-3">
+              <div class="col-auto mr-auto">
+                <label for="prefers-color-scheme-dark" class="form-check-label col-form-label-sm">@media (prefers-color-scheme: dark)</label>
+              </div>
+              <div class="col-auto">
+                <select id="prefers-color-scheme-dark" class="form-control form-control-sm" :disabled="options.colorScheme !== true" v-model="options.prefersColorScheme.dark">
+                  <option v-for="colorScheme in colorSchemes" :key="colorScheme">{{ colorScheme }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-check my-2">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" v-model="options.largeButton"> Large button
               </label>
             </div>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" :disabled="options.type === 'download'" v-model="options.showCount"> Show count
+            <div class="form-check my-2">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" :disabled="options.type === 'download'" v-model="options.showCount"> Show count
               </label>
             </div>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" v-model="options.standardIcon"> Standard icon
+            <div class="form-check my-2">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" v-model="options.standardIcon"> Standard icon
               </label>
             </div>
           </div>
           <div class="form-group">
             <label for="syntax">Syntax</label>
-            <select id="syntax" class="custom-select" v-model="options.syntax">
+            <select id="syntax" class="form-control" v-model="options.syntax">
               <option>html</option>
               <option value="vue">vue-github-button</option>
               <option value="react">react-github-btn</option>
@@ -110,10 +145,20 @@ export default {
           icon: 'octicon-cloud-download'
         }
       ],
+      colorSchemes: [
+        'light',
+        'dark'
+      ],
       options: {
         user: '',
         repo: '',
         type: null,
+        colorScheme: false,
+        prefersColorScheme: {
+          'no-preference': 'light',
+          light: 'light',
+          dark: 'dark'
+        },
         largeButton: false,
         showCount: false,
         standardIcon: false,
@@ -192,6 +237,12 @@ export default {
         })(),
         'data-text': (() => {
           return this.$options.filters.capitalize(options.type) + (options.type === 'follow' ? ' @' + options.user : '')
+        })(),
+        'data-color-scheme': (() => {
+          if (options.colorScheme !== true) {
+            return
+          }
+          return 'no-preference: ' + options.prefersColorScheme['no-preference'] + '; light: ' + options.prefersColorScheme.light + '; dark: ' + options.prefersColorScheme.dark + ';'
         })(),
         'data-icon': (() => {
           if (options.standardIcon) {
