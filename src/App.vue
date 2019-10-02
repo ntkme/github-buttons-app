@@ -63,20 +63,32 @@
                 </select>
               </div>
             </div>
-            <div class="form-check my-2">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" v-model="options.largeButton"> Large button
-              </label>
+            <div class="form-row my-2">
+              <div class="col-auto">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" v-model="options.largeButton"> Large button
+                  </label>
+                </div>
+              </div>
             </div>
-            <div class="form-check my-2">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" :disabled="options.type === 'download'" v-model="options.showCount"> Show count
-              </label>
+            <div class="form-row my-2">
+              <div class="col-auto">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'download'" v-model="options.showCount"> Show count
+                  </label>
+                </div>
+              </div>
             </div>
-            <div class="form-check my-2">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" v-model="options.standardIcon"> Standard icon
-              </label>
+            <div class="form-row my-2">
+              <div class="col-auto">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" v-model="options.standardIcon"> Standard icon
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-group">
