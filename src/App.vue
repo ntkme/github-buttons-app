@@ -24,7 +24,7 @@
               <div class="input-group-append input-group-prepend">
                 <span class="input-group-text">/</span>
               </div>
-              <input ref="repo" class="form-control" type="text" maxlength="100" placeholder=":repo" :disabled="options.type === 'follow'" :class="{ 'is-invalid': options.repo !== '' && !isValidRepo }" v-model="options.repo">
+              <input ref="repo" class="form-control" type="text" maxlength="100" placeholder=":repo" :disabled="options.type === 'follow' || options.type === 'sponsor'" :class="{ 'is-invalid': options.repo !== '' && !isValidRepo }" v-model="options.repo">
             </div>
           </div>
           <div class="form-group">
@@ -76,7 +76,7 @@
               <div class="col-auto">
                 <div class="form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'download'" v-model="options.showCount"> Show count
+                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'sponsor' || options.type === 'download'" v-model="options.showCount"> Show count
                   </label>
                 </div>
               </div>
@@ -137,6 +137,10 @@ export default {
           icon: 'octicon-mark-github'
         },
         {
+          value: 'sponsor',
+          icon: 'octicon-heart'
+        },
+        {
           value: 'watch',
           icon: 'octicon-eye'
         },
@@ -191,7 +195,7 @@ export default {
     'options.type' () {
       this.$nextTick(() => {
         if (document.activeElement !== this.$refs.user && document.activeElement !== this.$refs.repo) {
-          if (this.options.type === 'follow' || !this.isValidUser || (this.isValidUser && this.isValidRepo)) {
+          if ((this.options.type === 'follow' || this.options.type === 'sponsor') || !this.isValidUser || (this.isValidUser && this.isValidRepo)) {
             this.$refs.user.focus()
           } else {
             this.$refs.repo.focus()
@@ -220,7 +224,7 @@ export default {
     attrs () {
       const options = { ...this.options }
 
-      if (!this.isValidUser || (!this.isValidRepo && options.type !== 'follow')) {
+      if (!this.isValidUser || (!this.isValidRepo && options.type !== 'follow' && options.type !== 'sponsor')) {
         options.user = 'ntkme'
         options.repo = 'github-buttons'
       }
@@ -233,6 +237,8 @@ export default {
           switch (options.type) {
             case 'follow':
               return base + user
+            case 'sponsor':
+              return base + '/users/' + options.user + '/sponsorship'
             case 'watch':
               return base + repo + '/subscription'
             case 'star':
@@ -261,6 +267,8 @@ export default {
             return
           }
           switch (options.type) {
+            case 'sponsor':
+              return 'octicon-heart'
             case 'watch':
               return 'octicon-eye'
             case 'star':
@@ -281,6 +289,7 @@ export default {
         'data-show-count': (() => {
           if (options.showCount) {
             switch (options.type) {
+              case 'sponsor':
               case 'download':
                 return
               default:
@@ -289,7 +298,7 @@ export default {
           }
         })(),
         'aria-label': (() => {
-          return this.$options.filters.capitalize(options.type) + (options.type === 'follow' ? ' @' + options.user : ' ' + options.user + '/' + options.repo) + ' on GitHub'
+          return this.$options.filters.capitalize(options.type) + (options.type === 'follow' || options.type === 'sponsor' ? ' @' + options.user : ' ' + options.user + '/' + options.repo) + ' on GitHub'
         })()
       }
     },
