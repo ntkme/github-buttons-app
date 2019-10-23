@@ -238,7 +238,7 @@ export default {
             case 'follow':
               return base + user
             case 'sponsor':
-              return base + '/users/' + options.user + '/sponsorship'
+              return base + '/sponsors/' + options.user
             case 'watch':
               return base + repo + '/subscription'
             case 'star':
