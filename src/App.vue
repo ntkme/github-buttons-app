@@ -76,7 +76,7 @@
               <div class="col-auto">
                 <div class="form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'sponsor' || options.type === 'download'" v-model="options.showCount"> Show count
+                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'sponsor' || options.type === 'use this template' || options.type === 'download'" v-model="options.showCount"> Show count
                   </label>
                 </div>
               </div>
@@ -151,6 +151,10 @@ export default {
         {
           value: 'fork',
           icon: 'octicon-repo-forked'
+        },
+        {
+          value: 'use this template',
+          icon: 'octicon-repo-template'
         },
         {
           value: 'issue',
@@ -245,6 +249,8 @@ export default {
               return base + repo
             case 'fork':
               return base + repo + '/fork'
+            case 'use this template':
+              return base + repo + '/generate'
             case 'issue':
               return base + repo + '/issues'
             case 'download':
@@ -275,6 +281,8 @@ export default {
               return 'octicon-star'
             case 'fork':
               return 'octicon-repo-forked'
+            case 'use this template':
+              return 'octicon-repo-template'
             case 'issue':
               return 'octicon-issue-opened'
             case 'download':
@@ -290,6 +298,7 @@ export default {
           if (options.showCount) {
             switch (options.type) {
               case 'sponsor':
+              case 'use this template':
               case 'download':
                 return
               default:
@@ -310,7 +319,7 @@ export default {
       }
 
       const attrs = this.attrs
-      for (let key in attrs) {
+      for (const key in attrs) {
         if (attrs[key] != null) {
           if (key === 'data-text') {
             a.textContent = attrs[key]
