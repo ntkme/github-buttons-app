@@ -1,0 +1,67 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+  publish:
+    name: Publish
+
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish
+        run: |-
+          eval "$(ssh-agent -s)"
+          echo "$DEPLOY_KEY" | ssh-add -
+          cd dist
+          git init
+          git config user.name "$(git -C .. log -1 --format='%cn')"
+          git config user.email "$(git -C .. log -1 --format='%ce')"
+          git remote add origin git@github.com:buttons/buttons.github.io.git
+          git fetch origin master
+          git reset origin/master
+          git add --all
+          git commit --allow-empty --message "$GITHUB_REPOSITORY@$GITHUB_SHA $(git -C .. log -1 --format='%B')"
+          git push origin master
+          ssh-agent -k
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
