@@ -4,10 +4,6 @@ html {
 }
 .header {
   border-bottom: 1px solid #e5e5e5;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 .navbar-brand {
   cursor: pointer;
