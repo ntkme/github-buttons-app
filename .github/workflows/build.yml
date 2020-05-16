@@ -52,6 +52,7 @@ jobs:
         run: |-
           eval "$(ssh-agent -s)"
           echo "$DEPLOY_KEY" | ssh-add -
+          unset DEPLOY_KEY
           cd dist
           git init
           git config user.name "$(git -C .. log -1 --format='%cn')"
@@ -62,6 +63,6 @@ jobs:
           git add --all
           git commit --allow-empty --message "$GITHUB_REPOSITORY@$GITHUB_SHA $(git -C .. log -1 --format='%B')"
           git push origin master
-          ssh-agent -k
+          eval "$(ssh-agent -k)"
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
