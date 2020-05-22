@@ -1,6 +1,6 @@
 # buttons.github.io
 
-[![CircleCI](https://img.shields.io/circleci/project/github/ntkme/github-buttons-app.svg)](https://circleci.com/gh/ntkme/github-buttons-app)
+![build](https://github.com/ntkme/github-buttons-app/workflows/build/badge.svg)
 
 ## Project setup
 ```
