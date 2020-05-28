@@ -162,7 +162,7 @@ export default {
         },
         {
           value: 'download',
-          icon: 'octicon-cloud-download'
+          icon: 'octicon-download'
         }
       ],
       colorSchemes: [
@@ -286,7 +286,7 @@ export default {
             case 'issue':
               return 'octicon-issue-opened'
             case 'download':
-              return 'octicon-cloud-download'
+              return 'octicon-download'
           }
         })(),
         'data-size': (() => {
