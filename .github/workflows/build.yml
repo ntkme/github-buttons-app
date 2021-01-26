@@ -50,15 +50,15 @@ jobs:
           echo "$DEPLOY_KEY" | ssh-add -
           unset DEPLOY_KEY
           cd dist
-          git init
+          git init --initial-branch main
           git config user.name "$(git -C .. log -1 --format='%cn')"
           git config user.email "$(git -C .. log -1 --format='%ce')"
           git remote add origin git@github.com:buttons/buttons.github.io.git
-          git fetch origin master
-          git reset origin/master
+          git fetch origin main
+          git reset origin/main
           git add --all
           git commit --allow-empty --message "$GITHUB_REPOSITORY@$GITHUB_SHA $(git -C .. log -1 --format='%B')"
-          git push origin master
+          git push origin main
           eval "$(ssh-agent -k)"
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
