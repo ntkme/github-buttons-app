@@ -7,8 +7,8 @@
           <div class="col-9 col-sm-6 col-md-4 col-lg-2" v-for="type in types" :key="type.value">
             <div class="form-check">
               <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="type" :value="type.value" v-model="options.type">{{ type.value | capitalize }}<br>
-                <github-button href="#" data-size="large" :data-icon="type.icon" :data-text="$options.filters.capitalize(type.value)" aria-hidden="true"></github-button>
+                <input type="radio" class="form-check-input" name="type" :value="type.value" v-model="options.type">{{ capitalize(type.value) }}<br>
+                <github-button href="#" data-size="large" :data-icon="type.icon" :data-text="capitalize(type.value)" aria-hidden="true"></github-button>
               </label>
             </div>
           </div>
@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import './main.css'
+import './assets/main.css'
 import GithubButton from 'vue-github-button'
 import Snippet from '@/components/Snippet'
 
@@ -260,7 +260,7 @@ export default {
           }
         })(),
         'data-text': (() => {
-          return this.$options.filters.capitalize(options.type) + (options.type === 'follow' ? ' @' + options.user : '')
+          return this.capitalize(options.type) + (options.type === 'follow' ? ' @' + options.user : '')
         })(),
         'data-color-scheme': (() => {
           if (options.colorScheme !== true) {
@@ -307,7 +307,7 @@ export default {
           }
         })(),
         'aria-label': (() => {
-          return this.$options.filters.capitalize(options.type) + (options.type === 'follow' || options.type === 'sponsor' ? ' @' + options.user : ' ' + options.user + '/' + options.repo) + ' on GitHub'
+          return this.capitalize(options.type) + (options.type === 'follow' || options.type === 'sponsor' ? ' @' + options.user : ' ' + options.user + '/' + options.repo) + ' on GitHub'
         })()
       }
     },
@@ -350,14 +350,12 @@ export default {
       }
     }
   },
-  filters: {
+  methods: {
     capitalize (value) {
       if (!value) return ''
       value = value.toString()
       return value.charAt(0).toUpperCase() + value.slice(1)
-    }
-  },
-  methods: {
+    },
     getPreviewAttrs () {
       return { ...this.attrs, 'data-show-count': this.attrs['data-show-count'] && !this.timeoutID }
     }
