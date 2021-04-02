@@ -167,7 +167,8 @@ export default {
       ],
       colorSchemes: [
         'light',
-        'dark'
+        'dark',
+        'dark_dimmed'
       ],
       options: {
         user: '',
