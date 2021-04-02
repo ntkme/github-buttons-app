@@ -16,7 +16,7 @@
       </fieldset>
       <hr>
       <div class="row" v-if="options.type">
-        <div class="col-12 col-sm-6 col-md-4">
+        <div class="col-12 col-sm-6 col-md-5">
           <h4>Button options</h4>
           <div class="form-group">
             <div class="input-group">
@@ -100,7 +100,7 @@
             </select>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-8">
+        <div class="col-12 col-sm-6 col-md-7">
           <h4>Preview and code</h4>
           <p>Try out your button, then copy and paste the code below into the HTML for your site.</p>
           <p :style="{ height: options.largeButton ? '28px' : '20px' }">
