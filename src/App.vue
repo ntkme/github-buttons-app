@@ -76,7 +76,7 @@
               <div class="col-auto">
                 <div class="form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'sponsor' || options.type === 'use this template' || options.type === 'discuss' || options.type === 'download'" v-model="options.showCount"> Show count
+                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'sponsor' || options.type === 'use this template' || options.type === 'discuss' || options.type === 'download' || options.type === 'install'" v-model="options.showCount"> Show count
                   </label>
                 </div>
               </div>
@@ -157,16 +157,20 @@ export default {
           icon: 'octicon-repo-template'
         },
         {
-          value: 'issue',
-          icon: 'octicon-issue-opened'
-        },
-        {
           value: 'discuss',
           icon: 'octicon-comment-discussion'
         },
         {
+          value: 'issue',
+          icon: 'octicon-issue-opened'
+        },
+        {
           value: 'download',
           icon: 'octicon-download'
+        },
+        {
+          value: 'install',
+          icon: 'octicon-package'
         }
       ],
       colorSchemes: [
@@ -256,12 +260,14 @@ export default {
               return base + repo + '/fork'
             case 'use this template':
               return base + repo + '/generate'
-            case 'issue':
-              return base + repo + '/issues'
             case 'discuss':
               return base + repo + '/discussions'
+            case 'issue':
+              return base + repo + '/issues'
             case 'download':
               return base + repo + '/archive/master.zip'
+            case 'install':
+              return base + repo + '/packages'
             default:
               return base
           }
@@ -296,6 +302,8 @@ export default {
               return 'octicon-comment-discussion'
             case 'download':
               return 'octicon-download'
+            case 'install':
+              return 'octicon-package'
           }
         })(),
         'data-size': (() => {
@@ -310,6 +318,7 @@ export default {
               case 'use this template':
               case 'discuss':
               case 'download':
+              case 'install':
                 return
               default:
                 return true
