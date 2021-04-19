@@ -76,7 +76,7 @@
               <div class="col-auto">
                 <div class="form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'sponsor' || options.type === 'use this template' || options.type === 'discuss' || options.type === 'download' || options.type === 'install'" v-model="options.showCount"> Show count
+                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'sponsor' || options.type === 'discuss' || options.type === 'download' || options.type === 'install this package' || options.type === 'use this GitHub Action' || options.type === 'use this template'" v-model="options.showCount"> Show count
                   </label>
                 </div>
               </div>
@@ -153,24 +153,28 @@ export default {
           icon: 'octicon-repo-forked'
         },
         {
-          value: 'use this template',
-          icon: 'octicon-repo-template'
+          value: 'issue',
+          icon: 'octicon-issue-opened'
         },
         {
           value: 'discuss',
           icon: 'octicon-comment-discussion'
         },
         {
-          value: 'issue',
-          icon: 'octicon-issue-opened'
-        },
-        {
           value: 'download',
           icon: 'octicon-download'
         },
         {
-          value: 'install',
+          value: 'install this package',
           icon: 'octicon-package'
+        },
+        {
+          value: 'use this template',
+          icon: 'octicon-repo-template'
+        },
+        {
+          value: 'use this GitHub Action',
+          icon: 'octicon-play'
         }
       ],
       colorSchemes: [
@@ -258,16 +262,18 @@ export default {
               return base + repo
             case 'fork':
               return base + repo + '/fork'
-            case 'use this template':
-              return base + repo + '/generate'
             case 'discuss':
               return base + repo + '/discussions'
             case 'issue':
               return base + repo + '/issues'
             case 'download':
-              return base + repo + '/archive/refs/heads/main.zip'
-            case 'install':
+              return base + repo + '/archive/HEAD.zip'
+            case 'install this package':
               return base + repo + '/packages'
+            case 'use this GitHub Action':
+              return base + repo
+            case 'use this template':
+              return base + repo + '/generate'
             default:
               return base
           }
@@ -294,16 +300,18 @@ export default {
               return 'octicon-star'
             case 'fork':
               return 'octicon-repo-forked'
-            case 'use this template':
-              return 'octicon-repo-template'
             case 'issue':
               return 'octicon-issue-opened'
             case 'discuss':
               return 'octicon-comment-discussion'
             case 'download':
               return 'octicon-download'
-            case 'install':
+            case 'install this package':
               return 'octicon-package'
+            case 'use this GitHub Action':
+              return 'octicon-play'
+            case 'use this template':
+              return 'octicon-repo-template'
           }
         })(),
         'data-size': (() => {
@@ -315,10 +323,11 @@ export default {
           if (options.showCount) {
             switch (options.type) {
               case 'sponsor':
-              case 'use this template':
               case 'discuss':
               case 'download':
-              case 'install':
+              case 'install this package':
+              case 'use this GitHub Action':
+              case 'use this template':
                 return
               default:
                 return true
