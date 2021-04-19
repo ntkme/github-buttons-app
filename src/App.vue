@@ -76,7 +76,7 @@
               <div class="col-auto">
                 <div class="form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'sponsor' || options.type === 'use this template' || options.type === 'download'" v-model="options.showCount"> Show count
+                    <input class="form-check-input" type="checkbox" :disabled="options.type === 'sponsor' || options.type === 'use this template' || options.type === 'discuss' || options.type === 'download'" v-model="options.showCount"> Show count
                   </label>
                 </div>
               </div>
@@ -159,6 +159,10 @@ export default {
         {
           value: 'issue',
           icon: 'octicon-issue-opened'
+        },
+        {
+          value: 'discuss',
+          icon: 'octicon-comment-discussion'
         },
         {
           value: 'download',
@@ -254,6 +258,8 @@ export default {
               return base + repo + '/generate'
             case 'issue':
               return base + repo + '/issues'
+            case 'discuss':
+              return base + repo + '/discussions'
             case 'download':
               return base + repo + '/archive/master.zip'
             default:
@@ -286,6 +292,8 @@ export default {
               return 'octicon-repo-template'
             case 'issue':
               return 'octicon-issue-opened'
+            case 'discuss':
+              return 'octicon-comment-discussion'
             case 'download':
               return 'octicon-download'
           }
@@ -300,6 +308,7 @@ export default {
             switch (options.type) {
               case 'sponsor':
               case 'use this template':
+              case 'discuss':
               case 'download':
                 return
               default:
