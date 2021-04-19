@@ -265,7 +265,7 @@ export default {
             case 'issue':
               return base + repo + '/issues'
             case 'download':
-              return base + repo + '/archive/master.zip'
+              return base + repo + '/archive/refs/heads/main.zip'
             case 'install':
               return base + repo + '/packages'
             default:
